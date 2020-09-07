@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="http.cat/404">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%if title%}
+    <title>Flask- {{title}}</title>
+    {%else%}
+    <title>Flask</title>
+    {%endif%}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info stickie">
+        <a class="navbar-brand" href="/">Flask Learning</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                {% if current_user.is_anonymous %}
+                <a class="nav-item nav-link active" href={{url_for('about')}}>About</a>
+                <a class="nav-item nav-link" href={{url_for('register')}}>Register</a>
+                <a class="nav-item nav-link" href={{url_for('login')}}>Login</a>
+                {% else %}
+                <a class="nav-item nav-link" href={{url_for('afterlogin')}}>AfterLogin</a>
+                <a class="nav-item nav-link" href={{url_for('new_post')}}>New Post</a>
+                <a class="nav-item nav-link" href={{url_for('account')}}>Account</a>
+                <a class="nav-item nav-link" href={{url_for('logout')}}>Logout</a>
+                {%endif%}
+            </div>
+        </div>
+    </nav>
+
+    {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages%}
+            {%for category , message in messages%}
+    <div class="alert alert-{{category}} text-center">
+        {{ message }}
+
+    </div>
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+
+    {%block body%}
+    {%endblock%}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

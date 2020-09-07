@@ -1,0 +1,38 @@
+{%extends 'common.html'%}
+{%block body%}
+<div class="container">
+    <h1 class='p-2 my-auto text-center bg-warning'>
+        {% if current_user.is_authenticated %}
+        Hello {{current_user.username}}
+        {%else%}
+        Hello world
+        {%endif%}
+    </h1>
+<table>
+        <tr valign="top">
+            <td><img src="{{ user.avatar(128) }}"></td>
+            <td>
+                <h1 class="text-center bg-primary p-2 m-2 text-white" >User: {{ user.username|upper }}</h1>
+                 {% if user.last_seen %}<p class="text-center bg-info p-1 m-2 text-white">Last seen on: {{ user.last_seen }}</p>{% endif %}
+            </td>
+        </tr>
+</table>
+{% for post in posts %}
+        <article class="media content-section">
+            <div>
+                <img src="{{post.author.avatar(50)}}">
+            </div>
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.author.username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{url_for('post',post_id=post.id)}}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content|truncate(50) }}</p>
+          </div>
+        </article>
+    {% endfor %}
+
+
+{%endblock%}
+

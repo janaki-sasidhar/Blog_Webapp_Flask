@@ -1,0 +1,68 @@
+{%extends 'common.html'%}
+{%block body%}
+
+<table class="mx-auto">
+        <tr valign="top">
+            <td><img src="{{ user.avatar(128) }}"></td>
+            <td>
+                <h1 class="text-center bg-primary p-2 m-2 text-white" >User: {{ user.username|upper }}</h1>
+                <p class="text-center bg-info p-1 m-2 text-white"> Email: {{user.email}}</p>
+                 {% if user.last_seen %}<p class="text-center bg-info p-1 m-2 text-white">Last seen on: {{ user.last_seen }}</p>{% endif %}
+            </td>
+        </tr>
+</table>
+
+<div class="p-0 container w-50 ">
+    <form method="post">
+        <div class="form-group">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom">
+                    Profile Updater form
+                </legend>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control w-100 d-inline bg-info text-white") }}
+
+                        {% if form.username.errors%}
+                        {{form.username(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {%else%}
+                    {{ form.username(class="form-control form-control-lg")}}
+                    {%endif%}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control w-100 bg-info d-inline text-white") }}
+                    {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                        <span>
+                        {{error}}
+                        </span>
+                        {%endfor%}
+                    </div>
+                    {%else%}
+                    {{ form.email(class="form-control form-control-lg")}}
+                    {%endif%}
+                </div>
+                <div class="form-group">
+                    {{ form.about_me.label(class="form-control w-100 bg-info d-inline text-white") }}
+                    {{ form.about_me(class="form-control form-control-lg" , rows=10)}}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+
+
+            </fieldset>
+        </div>
+    </form>
+</div>
+{%endblock body%}
+
+
+

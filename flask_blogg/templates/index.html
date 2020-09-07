@@ -1,0 +1,34 @@
+{%extends 'common.html'%}
+
+{%block body%}
+
+{% if current_user.is_authenticated%}
+<table class="mx-auto">
+        <tr valign="top">
+            <td><img src="{{ user.avatar(128) }}"></td>
+            <td>
+                <h1 class="text-center bg-primary p-2 m-2 text-white" >User: {{ user.username|upper }}</h1>
+                <p class="text-center bg-info p-1 m-2 text-white"> Email: {{user.email}}</p>
+                 {% if user.last_seen %}<p class="text-center bg-info p-1 m-2 text-white">Last seen on: {{ user.last_seen }}</p>{% endif %}
+            </td>
+        </tr>
+</table>
+{%endif%}
+
+
+{% for post in posts %}
+        <article class="media content-section">
+            <div>
+                <img src="{{post.author.avatar(50)}}">
+            </div>
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{url_for('profile',username=post.author.username)}}">{{ post.author.username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{url_for('post',post_id=post.id)}}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content|truncate(50) }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{%endblock%}

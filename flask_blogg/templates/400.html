@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404-not found</title>
+    <style>
+        body {
+            background-color: slategray;
+        }
+
+        .cont {
+            margin: 50px auto;
+            padding: 10px;
+            background-color: crimson;
+            border: 1px solid white;
+            width: 300px;
+            max-width: 100%;
+
+        }
+
+        .conts {
+            margin: 50px auto;
+            padding: 10px;
+            background-color: crimson;
+            width: 100px;
+            max-width: 100%;
+            cursor: pointer;
+            border: 1px solid white;
+
+        }
+
+        .hone {
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            padding: 2px;
+            font-size: 2em;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <h1 class="hone">404 error. The page isnt accessible. Plese go home</h1>
+    </div>
+    <p class="conts">Retry</p>
+    <p class="conts">Login page</p>
+    <script>
+        const elem = document.querySelector('.conts')
+        elem.addEventListener('click', () => {
+            location.replace('/')
+        })
+        const elems = document.querySelector('.conts')
+        elems.addEventListener('click', () => {
+            location.replace('/loginForm')
+        })
+
+    </script>
+
+</body>
+
+</html>
