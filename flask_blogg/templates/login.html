@@ -46,15 +46,15 @@
                 </div>
                 <div class="form-group">
                     {{ form.submit(class="btn btn-primary") }}
+                <bold class="text-muted ">
+                   <a href="{{url_for('users.reset_request')}}">Forgot password?</a>
+               </bold>
                 </div>
             </fieldset>
         </div>
-               <small class="text-muted ">
-                   <a href="#">Forgot password?</a>
-               </small>
          <div class="border-top pb-5">
     <small class="text-muted">
-        Doesn't have an account ? <a href="{{url_for('register')}}" class="ml-2"> Sign up!</a>
+        Doesn't have an account ? <a href="{{url_for('users.register')}}" class="ml-2"> Sign up!</a>
     </small>
     </form>
 </div>

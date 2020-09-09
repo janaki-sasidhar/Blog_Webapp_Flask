@@ -1,9 +1,11 @@
 {% extends 'common.html' %}
 
 {% block body %}
+<div class="containers">
+
 <table class="bg-secondary p-3 tablestyle">
         <tr valign="top">
-            <td><img src="{{ user.avatar(500) }}"></td>
+            <td><img class="img-fluid" src="{{ user.avatar(500) }}"></td>
             <td>
                 <h1 class="text-center bg-primary p-2 m-2 text-white" >User: {{ user.username|upper }}</h1>
                 <p class="text-center bg-info p-1 m-2 text-white"> Email: {{user.email}}</p>
@@ -13,5 +15,5 @@
             </td>
         </tr>
 </table>
-
+</div>
 {% endblock body %}

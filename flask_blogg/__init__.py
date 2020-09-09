@@ -1,24 +1,53 @@
-from flask import Flask
+from flask import Flask, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-import os
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_migrate import Migrate
+from flask_mail import Mail
+from flask_admin import Admin, AdminIndexView
+from flask_blogg.config import Config
+
+
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        if not current_user.is_anonymous:
+            if current_user.email == 'janakisasidhar1@gmail.com':
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        flash('You dont have rights to access this page', 'danger')
+        return redirect(url_for('main.index'))
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'f557d3ba311b62c4ccaa1b210a9276a478c9e425'
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-    os.path.join(basedir, 'data.sqlite')
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://testinguser:AaBb@123!@#@20.186.178.119/testing'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
-login_manager.login_view = "login"
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+mail = Mail()
+admin = Admin(index_view=MyAdminIndexView())
+login_manager = LoginManager()
+login_manager.login_view = "users.login"
 login_manager.login_message_category = "danger"
-from flask_blogg import routes, models
-db.create_all()
+
+
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
+    admin.init_app(app)
+    from flask_blogg.users.routes import users
+    from flask_blogg.posts.routes import posts
+    from flask_blogg.main.routes import main
+    from flask_blogg.main.routes import errors
+
+    app.register_blueprint(users)
+    app.register_blueprint(posts)
+    app.register_blueprint(main)
+    app.register_blueprint(errors)
+    return app

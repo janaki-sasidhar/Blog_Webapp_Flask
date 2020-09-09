@@ -29,14 +29,17 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
                 {% if current_user.is_anonymous %}
-                <a class="nav-item nav-link active" href={{url_for('about')}}>About</a>
-                <a class="nav-item nav-link" href={{url_for('register')}}>Register</a>
-                <a class="nav-item nav-link" href={{url_for('login')}}>Login</a>
+                <a class="nav-item nav-link active" href={{url_for('main.about')}}>About</a>
+                <a class="nav-item nav-link" href={{url_for('users.register')}}>Register</a>
+                <a class="nav-item nav-link" href={{url_for('users.login')}}>Login</a>
                 {% else %}
-                <a class="nav-item nav-link" href={{url_for('afterlogin')}}>AfterLogin</a>
-                <a class="nav-item nav-link" href={{url_for('new_post')}}>New Post</a>
-                <a class="nav-item nav-link" href={{url_for('account')}}>Account</a>
-                <a class="nav-item nav-link" href={{url_for('logout')}}>Logout</a>
+                <a class="nav-item nav-link" href={{url_for('users.afterlogin')}}>Your Posts</a>
+                <a class="nav-item nav-link" href={{url_for('posts.new_post')}}>New Post</a>
+                <a class="nav-item nav-link" href={{url_for('users.account')}}>Account</a>
+                <a class="nav-item nav-link" href={{url_for('users.logout')}}>Logout</a>
+                {%if current_user.email=='janakisasidhar1@gmail.com'%}
+                <a href="/admin" class="nav-item nav-link"> Admin</a>
+                {%endif%}
                 {%endif%}
             </div>
         </div>

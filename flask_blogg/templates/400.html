@@ -17,6 +17,7 @@
             border: 1px solid white;
             width: 300px;
             max-width: 100%;
+            border-radius: 30px;
 
         }
 
@@ -28,6 +29,7 @@
             max-width: 100%;
             cursor: pointer;
             border: 1px solid white;
+          
 
         }
 
@@ -36,6 +38,7 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 1.2em;
             text-align: center;
+           
         }
 
         p {
@@ -51,18 +54,18 @@
 <body>
     <div class="cont">
         <h1 class="hone">404 error. The page isnt accessible. Plese go home</h1>
+        <p class="conts">Go home</p>
     </div>
-    <p class="conts">Retry</p>
-    <p class="conts">Login page</p>
+
     <script>
         const elem = document.querySelector('.conts')
         elem.addEventListener('click', () => {
             location.replace('/')
         })
-        const elems = document.querySelector('.conts')
-        elems.addEventListener('click', () => {
-            location.replace('/loginForm')
-        })
+        // const elems = document.querySelector('.conts')
+        // elems.addEventListener('click', () => {
+        //     location.replace('/loginForm')
+        // })
 
     </script>
 

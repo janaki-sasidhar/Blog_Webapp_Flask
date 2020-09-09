@@ -10,7 +10,13 @@
     height:50px;
 }
 
+.containers{
 
+  max-width : 100%;
+  width: 1000px;
+
+
+}
 .about{
   margin : 3rem;
   background-color : crimson;
