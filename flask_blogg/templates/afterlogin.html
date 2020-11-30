@@ -28,7 +28,8 @@
               <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
             <h2><a class="article-title" href="{{url_for('posts.post',post_id=post.id)}}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content|truncate(50) }}</p>
+            <p class="article-content">{{ post.content | markdown}}</p>
+            <p class="article-content">fck</p>
           </div>
         </article>
     {% endfor %}

@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_admin import Admin, AdminIndexView
 from flask_blogg.config import Config
+from flask_misaka import Misaka
 
 
 class MyAdminIndexView(AdminIndexView):
@@ -27,6 +28,7 @@ app = Flask(__name__)
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 mail = Mail()
+md = Misaka()
 admin = Admin(index_view=MyAdminIndexView())
 login_manager = LoginManager()
 login_manager.login_view = "users.login"
@@ -41,6 +43,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     mail.init_app(app)
     admin.init_app(app)
+    md.init_app(app)
     from flask_blogg.users.routes import users
     from flask_blogg.posts.routes import posts
     from flask_blogg.main.routes import main
