@@ -22,6 +22,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     about_me = db.Column(db.String(200), nullable=True)
+    usertype = db.Column(db.Integer, nullable=True)
+    approved = db.Column(db.Integer, nullable=False, default=0)
     posts = db.relationship('Post', backref='author',  lazy=True)
 
     def avatar(self, size):

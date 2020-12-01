@@ -1,0 +1,45 @@
+{% extends 'common.html' %}
+{% block body %}
+<article class="media content-section">
+<div class="container">
+    <form method="POST">
+        <dl>
+            <input type="submit" value="Approved" name="sub_type" />
+            <input type="submit" value="Not Approved" name="sub_type" />
+            <input type="hidden" name="form_type" value="null">
+        </dl>
+    </form>
+ <table class="table table-bordered "> <!--table-dark -->
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Toggle</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for user in users%}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+
+		<td>
+            <form action="" method="post">
+                {%if user.approved==0%}
+                <input class="btn btn-sm btn-primary" type="submit" value="approve" name="approve">
+                {%elif user.approved==1%}
+                <input class="btn btn-sm btn-danger" type="submit" value="disable" name="approve">
+                {%endif%}
+                <input type="hidden" name="userid" value="{{user.id}}">
+                <input type="hidden" name="form_type" value="approve_users">
+            </form>
+        </td>
+      </tr>
+        {%endfor%}
+    </tbody>
+  </table>
+  </div>
+  </article>
+{% endblock %}

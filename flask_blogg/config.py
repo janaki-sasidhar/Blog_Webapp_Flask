@@ -1,13 +1,16 @@
 import os
+import json
+with open('/etc/config.json') as f:
+    json_read = json.load(f)
 basedir = os.path.abspath(os.path.dirname(__file__))
-class Config:
-    SECRET_KEY = 'f557d3ba311b62c4ccaa1b210a9276a478c9e425'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-  #  SQLALCHEMY_DATABASE_URI='mysql+pymysql://root:password@localhost:30021/flaskdb'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = 'janakisasidhar1@gmail.com'
-    MAIL_PASSWORD = 'znxxllczqhlqsguu'
 
+
+class Config:
+    SECRET_KEY = json_read.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = json_read.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MAIL_SERVER = json_read.get('MAIL_SERVER')
+    MAIL_PORT = json_read.get('MAIL_PORT')
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = json_read.get('MAIL_USERNAME')
+    MAIL_PASSWORD = json_read.get('MAIL_PASSWORD')
