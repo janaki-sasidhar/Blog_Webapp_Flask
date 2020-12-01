@@ -29,7 +29,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 mail = Mail()
 md = Misaka()
-admin = Admin(index_view=MyAdminIndexView())
+admin = Admin(index_view=MyAdminIndexView(), template_mode='bootstrap3')
 login_manager = LoginManager()
 login_manager.login_view = "users.login"
 login_manager.login_message_category = "danger"

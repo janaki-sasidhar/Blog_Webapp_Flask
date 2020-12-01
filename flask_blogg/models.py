@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     about_me = db.Column(db.String(200), nullable=True)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    posts = db.relationship('Post', backref='author',  lazy=True)
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
