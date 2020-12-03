@@ -8,6 +8,7 @@ from flask_admin import AdminIndexView, Admin
 from flask_login import current_user
 from flask_blogg import admin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from sqlalchemy.sql import func
 
 
 @login_manager.user_loader
@@ -20,10 +21,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime, default=datetime.now)
     about_me = db.Column(db.String(200), nullable=True)
     usertype = db.Column(db.Integer, nullable=True)
-    approved = db.Column(db.Integer, nullable=False, default=0)
+    approved = db.Column(db.Integer, default=0)
     posts = db.relationship('Post', backref='author',  lazy=True)
 
     def avatar(self, size):
@@ -57,12 +58,6 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"The post is {self.title} on {self.date_posted}"
-
-
-class Plain(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), nullable=False, unique=True)
-    password = db.Column(db.String(60), nullable=False)
 
 
 class MyModelView(ModelView):

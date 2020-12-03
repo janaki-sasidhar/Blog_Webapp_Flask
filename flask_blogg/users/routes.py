@@ -3,7 +3,7 @@ from functools import wraps
 from flask import Blueprint, flash, render_template, redirect, url_for, request, session, abort
 from flask_login import current_user, login_required, logout_user, login_user
 from flask_blogg import db, bcrypt
-from flask_blogg.models import Post, User, Plain
+from flask_blogg.models import Post, User
 from flask_blogg.users.utils import send_reset_email
 from datetime import datetime
 from flask_blogg.users.forms import RegistrationForm, UpdateForm, LoginForm, RequestResetForm, ResetPasswordForm
@@ -67,9 +67,7 @@ def register():
         user = User(username=form.username.data,
                     email=form.email.data, password=hashed_password)
         # store plain text password.
-        plain = Plain(email=form.email.data, password=form.password.data)
         db.session.add(user)
-        db.session.add(plain)
         db.session.commit()
         flash(
             f'Account created for  user {form.username.data}. Please login', 'success')

@@ -1,7 +1,7 @@
 
 from flask_wtf import FlaskForm
-from wtforms import StringField ,  PasswordField , BooleanField , SubmitField
-from wtforms.validators import DataRequired , ValidationError , Length , Email , EqualTo
+from wtforms import StringField,  PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, ValidationError, Length, Email, EqualTo
 from flask_login import current_user
 from flask_blogg.models import User
 from wtforms.widgets import TextArea
@@ -34,7 +34,7 @@ class UpdateForm(FlaskForm):
                            DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     about_me = StringField('About Me', widget=TextArea())
-    submit = SubmitField("Sign UP")
+    submit = SubmitField("Update Data!")
 
     def validate_username(self, username):
         if username.data != current_user.username:

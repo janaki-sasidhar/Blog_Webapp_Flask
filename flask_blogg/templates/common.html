@@ -20,13 +20,13 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-info stickie">
-        <a class="navbar-brand" href="/">Flask Learning</a>
+        <a class="navbar-brand" href="/">A Blog</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
                 {% if current_user.is_anonymous %}
                 <a class="nav-item nav-link active" href={{url_for('main.about')}}>About</a>
@@ -35,11 +35,16 @@
                 {% else %}
                 <a class="nav-item nav-link" href={{url_for('users.afterlogin')}}>Your Posts</a>
                 <a class="nav-item nav-link" href={{url_for('posts.new_post')}}>New Post</a>
-                <a class="nav-item nav-link" href={{url_for('users.account')}}>Account</a>
-                <a class="nav-item nav-link" href={{url_for('users.logout')}}>Logout</a>
+                {%endif%}
+            </div>
+            <div class="navbar-nav">
+                {%if current_user.is_authenticated%}
                 {%if current_user.email=='janakisasidhar1@gmail.com'%}
                 <a href="/admin" class="nav-item nav-link"> Admin</a>
+                <a class="nav-item nav-link" href={{url_for('users.approve_users')}}>Approve</a>
                 {%endif%}
+                <a class="nav-item nav-link" href={{url_for('users.account')}}>Account</a>
+                <a class="nav-item nav-link" href={{url_for('users.logout')}}>Logout</a>
                 {%endif%}
             </div>
         </div>
