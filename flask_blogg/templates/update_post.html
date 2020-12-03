@@ -1,13 +1,13 @@
 {% extends 'common.html'%}
 {% block body%}
 
-<div class="p-0 container w-50 ">
+<div class="p-0 container">
     <form method="post">
         <div class="form-group">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom">
-                    Profile Updater form
+                    Post Updater form
                 </legend>
                 <div class="form-group">
                     {{ form.title.label(class="form-control w-100 d-inline bg-info text-white") }}

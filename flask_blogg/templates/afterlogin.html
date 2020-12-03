@@ -19,16 +19,16 @@
 </table>
 {% for post in posts %}
         <article class="media content-section">
-            <div>
+            <div class="mr-2">
                 <img src="{{post.author.avatar(50)}}">
             </div>
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author.username }}</a>
-              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+              <a class="mr-2" href="#">{{ post.author.username | capitalize}}</a>
+              <small class="text-muted"> Posted : {{ post.date_posted.strftime('%Y-%m-%d') }} | Last Modified : {{ post.last_modified.strftime('%Y-%m-%d') }}</small>
             </div>
-            <h2><a class="article-title" href="{{url_for('posts.post',post_id=post.id)}}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content | markdown}}</p>
+            <h2><a class="article-title" href="{{url_for('posts.post',post_id=post.id)}}">{{ post.title | upper }}</a></h2>
+            <p class="article-content">{{ post.content | truncate(200) |  markdown}}</p>
             <p class="article-content">fck</p>
           </div>
         </article>

@@ -53,6 +53,7 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
+    last_modified = db.Column(db.DateTime, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 

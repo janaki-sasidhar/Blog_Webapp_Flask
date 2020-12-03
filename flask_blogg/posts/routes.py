@@ -1,10 +1,10 @@
-from flask import Blueprint , flash , render_template , redirect ,abort , request , abort , url_for
-from flask_login import current_user , login_required
+from flask import Blueprint, flash, render_template, redirect, abort, request, abort, url_for
+from flask_login import current_user, login_required
 from flask_blogg.models import Post
 from flask_blogg import db
-from flask_blogg.posts.forms import PostForm , PostUpdateForm
-posts = Blueprint('posts',__name__)
-
+import datetime
+from flask_blogg.posts.forms import PostForm, PostUpdateForm
+posts = Blueprint('posts', __name__)
 
 
 @posts.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
@@ -18,6 +18,7 @@ def post_update(post_id):
         if form.validate_on_submit():
             post.title = form.title.data
             post.content = form.content.data
+            post.last_modified = datetime.datetime.utcnow()
             db.session.add(post)
             db.session.commit()
             flash('Your post has been updated successfully', "success")
