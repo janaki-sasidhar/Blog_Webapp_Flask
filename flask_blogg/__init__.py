@@ -48,9 +48,11 @@ def create_app(config_class=Config):
     from flask_blogg.posts.routes import posts
     from flask_blogg.main.routes import main
     from flask_blogg.main.routes import errors
+    from flask_blogg.paste.routes import paste
 
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(errors)
+    app.register_blueprint(paste)
     return app

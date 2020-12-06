@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+{{title}}
+    </title>
+    <style>
+        .buttonclass {
+            padding-bottom: 2px;
+            margin: 4px;
+            border: 1px solid #8301ec;
+        }
+
+        .pastepre {
+            margin : 5px;
+            padding : 2px;
+            border: 2px solid yellow;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Posted By : {%if title != 'Oops !' %} {{paste_data.author.email}} {%else%} None {%endif%} <br> 
+        Date Posted : {%if title != 'Oops !' %} {{paste_data.date_posted.strftime('%Y-%m-%d')}} {%else%} None {%endif%}
+    </header>
+    <center> <button  onclick="copyFunction()" class="buttonclass">Copy</button></center>   
+    <div class="">
+        {%if paste_data.content%}
+        <pre  class="pastepre" id="MyPaste">
+            {% autoescape false %}
+            {{paste_data.content}}
+            {%endautoescape%}
+        </pre>
+        {%else%}
+        <p>
+            Your Paste has been deleted !
+        </p>
+        {%endif%}
+    </div>
+    <script>
+        function copyFunction() {
+          var copyText = document.getElementById("MyPaste").innerHTML;
+          console.log(document.getElementById('MyPaste').innerHTML)
+          var elem = document.createElement("textarea");
+            document.body.appendChild(elem);
+            elem.value = copyText;
+            elem.select();
+            document.execCommand("copy");
+            alert(`Copied`)
+            document.body.removeChild(elem);
+        }
+        </script>
+</body>
+</html>

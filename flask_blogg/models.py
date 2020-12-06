@@ -26,6 +26,7 @@ class User(db.Model, UserMixin):
     usertype = db.Column(db.Integer, nullable=True)
     approved = db.Column(db.Integer, default=0)
     posts = db.relationship('Post', backref='author',  lazy=True)
+    pastes = db.relationship('Paste', backref='author', lazy=True)
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
@@ -59,6 +60,17 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"The post is {self.title} on {self.date_posted}"
+
+
+class Paste(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=True)
+    content = db.Column(db.Text, nullable=False)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f'The id of the paste is {self.id}'
 
 
 class MyModelView(ModelView):
