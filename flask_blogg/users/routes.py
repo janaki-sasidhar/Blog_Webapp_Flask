@@ -140,14 +140,14 @@ def reset_request():
     return render_template('reset_request.html', form=form, title='Reset password')
 
 
-@ users.route('/reset_password/<token>', methods=['GET', 'POST'])
+@ users.route('/resett_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid token or may be expired', 'warning')
-        return redirect(url_for('users.reset_request'))
+        return redirect(url_for('main.home'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
