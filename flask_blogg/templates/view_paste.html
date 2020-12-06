@@ -23,7 +23,7 @@
 <body>
     <header>
         Posted By : {%if title != 'Oops !' %} {{paste_data.author.email}} {%else%} None {%endif%} <br> 
-        Date Posted : {%if title != 'Oops !' %} {{paste_data.date_posted.strftime('%Y-%m-%d')}} {%else%} None {%endif%}
+        Date Posted : {%if title != 'Oops !' %} {{paste_data.date_posted.strftime('%Y-%m-%d %H:%M:%S')}} {%else%} None {%endif%}
     </header>
     <center> <button  onclick="copyFunction()" class="buttonclass">Copy</button></center>   
     <div class="">

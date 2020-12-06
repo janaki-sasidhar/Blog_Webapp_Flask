@@ -17,7 +17,7 @@ def new_paste():
         db.session.add(paste)
         db.session.commit()
         flash('The paste has been created successfully', 'success')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('paste.view_paste', title=form.title.data))
     return render_template('create_paste.html', title='New Paste', form=form)
 
 
