@@ -140,7 +140,7 @@ def reset_request():
     return render_template('reset_request.html', form=form, title='Reset password')
 
 
-@ users.route('/reset_password<token>', methods=['GET', 'POST'])
+@ users.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
@@ -152,9 +152,6 @@ def reset_password(token):
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         user.password = hashed_password
-        plain = Plain.query.filter_by(email=user.email).first()
-        plain.password = form.password.data
-        db.session.add(plain)
         db.session.commit()
         flash('Your password has been updated', 'success')
         return redirect(url_for('users.login'))
