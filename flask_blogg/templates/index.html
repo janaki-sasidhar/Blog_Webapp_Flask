@@ -15,7 +15,7 @@
 </table>
 {%endif%}
 
-
+{%if current_user.id_authenticated%}
 {% for post in posts.items %}
         <article class="media content-section">
             <div>
@@ -44,6 +44,7 @@
         ...
       {% endif %}
     {% endfor %}
+    {%endif%}
 </div>
 {%endblock%}
 
