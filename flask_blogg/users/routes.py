@@ -20,6 +20,7 @@ def usertype_zero(f):
 
 
 @users.route('/profile/<username>')
+@login_required
 def profile(username):
     user = User.query.filter_by(username=username).first()
     return render_template('profile.html', title='Profile', user=user)
