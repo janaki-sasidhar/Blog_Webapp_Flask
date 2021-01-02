@@ -1,0 +1,107 @@
+{% extends 'common.html' %} {% block body %}
+<div class="container">
+  <form method="POST">
+    <div class="form-group">
+      <label for="morningWalk">Did you walk in morning ? </label>
+      <select name="morningWalk" class="form-control" id="morningWalk">
+        <option value="1" selected>Yes</option>
+        <option value="0">No</option>
+      </select>
+      <label for="waterDrank">Total water quantity? </label>
+      <select name="waterDrank" class="form-control" id="waterDrank">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <small class="form-text text-muted"
+        >You can select any approximate answer</small
+      >
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="breakfast">Did you eat breakfast ? </label>
+          <select name="breakfast" class="form-control" id="breakfast">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="breakfastcalories"> Enter the calories (breakfast)</label>
+          <input
+            type="number"
+            name="breakfastcalories"
+            class="form-control"
+            id="breakfastcalories"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="lunch">Did you eat lunch ? </label>
+          <select name="lunch" class="form-control" id="lunch">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="lunchcalories"> Enter the calories (lunch)</label>
+          <input
+            type="number"
+            name="lunchcalories"
+            class="form-control"
+            id="lunchcalories"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="dinner">Did you eat dinner ? </label>
+          <select name="dinner" class="form-control" id="dinner">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="dinnercalories"> Enter the calories (lunch)</label>
+          <input
+            type="number"
+            name="dinnercalories"
+            class="form-control"
+            id="dinnercalories"
+          />
+        </div>
+      </div>
+
+      <label for="totalcalories">Total Calories</label>
+      <input
+        type="number"
+        disabled
+        name="totalcalories"
+        class="form-control"
+        id="totalcalories"
+      />
+      <label for="nightWalk">Did you walk in night ? </label>
+      <select name="nightWalk" class="form-control" id="nightWalk">
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+      </select>
+    </div>
+    <label for="comments">Any extra comments ? </label>
+    <textarea
+      class="form-control"
+      name="comments"
+      id="comments"
+      cols="10"
+      rows="4"
+    ></textarea>
+    <hr />
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="hidden" name="form_type" value="daily_record_data" />
+  </form>
+</div>
+{% endblock %}

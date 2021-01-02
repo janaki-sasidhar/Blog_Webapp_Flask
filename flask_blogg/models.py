@@ -27,6 +27,7 @@ class User(db.Model, UserMixin):
     approved = db.Column(db.Integer, default=0)
     posts = db.relationship('Post', backref='author',  lazy=True)
     pastes = db.relationship('Paste', backref='author', lazy=True)
+    dailyrecord = db.relationship('dailyRecord',backref='author',lazy=True)
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
@@ -61,7 +62,27 @@ class Post(db.Model):
     def __repr__(self):
         return f"The post is {self.title} on {self.date_posted}"
 
+class dailyRecord(db.Model):
+    __tablename__="dailyrecord"
+    id = db.Column(db.Integer, primary_key=True)
+    morningwalk = db.Column(db.Boolean, nullable=False)
+    waterdrank = db.Column(db.Integer,nullable=False)
+    breakfast = db.Column(db.Boolean,nullable=False)
+    breakfast_calories=db.Column(db.Integer, nullable=False)
+    lunch = db.Column(db.Boolean,nullable=False)
+    lunch_calories=db.Column(db.Integer, nullable=False)
+    dinner = db.Column(db.Boolean,nullable=False)
+    dinner_calories=db.Column(db.Integer, nullable=False)
+    total_calories = db.Column(db.Integer,nullable=False)
+    nightwalk = db.Column(db.Boolean,nullable=False)
+    comment = db.Column(db.Text,nullable=True)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow)
+    posted_or_not = db.Column(db.Integer,nullable=False,default=0)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+    def __repr__(self):
+        return f'This is the daily record'
 class Paste(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=True)

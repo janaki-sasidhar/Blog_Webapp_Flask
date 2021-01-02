@@ -1,6 +1,7 @@
-from flask import Blueprint , flash , render_template , redirect ,abort ,request
+from flask import Blueprint , flash , render_template , redirect ,abort ,request , jsonify , url_for
 from flask_login import current_user , login_required
-from flask_blogg.models import Post , User
+from flask_blogg import db
+from flask_blogg.models import Post , User , dailyRecord
 main = Blueprint('main',__name__)
 errors = Blueprint('errors',__name__)
 
@@ -22,6 +23,43 @@ def about():
 
 
 
+@main.route("/myip", methods=["GET"])
+def get_my_ip():
+    return jsonify({'ip': request.remote_addr}), 200
+
+
+
+
+@main.route('/dailyrecord/<int:userid>',methods=["GET","POST"])
+@login_required
+def dailyrecord(userid):
+    if current_user.id == userid:
+        if request.method=="POST":
+            if request.form['form_type']=='daily_record_data':
+                morningwalk = int(request.form['morningWalk'])
+                waterdrank = int(request.form['waterDrank'])
+                breakfast = int(request.form['breakfast'])
+                breakfast_calories = int(request.form['breakfastcalories'])
+                lunch = int(request.form['lunch'])
+                lunch_calories = int(request.form['lunchcalories'])
+                dinner = int(request.form['dinner'])
+                dinner_calories = int(request.form['dinnercalories'])
+                nightwalk = int(request.form['nightWalk'])
+                comments = request.form['comments']
+                total_calories=breakfast_calories+dinner_calories+lunch_calories
+                dailyrecord = dailyRecord(morningwalk=morningwalk , waterdrank=waterdrank , breakfast=breakfast, breakfast_calories=breakfast_calories,
+                lunch=lunch,lunch_calories=lunch_calories,
+                dinner=dinner,dinner_calories=dinner_calories,
+                nightwalk=nightwalk,comment=comments,
+                total_calories=total_calories,
+                posted_or_not=1,userid=current_user.id)
+                db.session.add(dailyrecord)
+                db.session.commit()
+                flask('data is uploaded successfully','success')
+    else:
+        flash("You dont have access to another person's record","danger")
+        return redirect(url_for('main.index'))
+    return render_template('dailyrecord.html')
 
 
 @errors.app_errorhandler(404)
@@ -32,3 +70,5 @@ def error_404(e):
 @errors.app_errorhandler(500)
 def internal_error(e):
     return render_template("500.html"), 500
+
+
