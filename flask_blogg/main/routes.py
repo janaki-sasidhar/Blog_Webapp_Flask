@@ -1,6 +1,8 @@
 from flask import Blueprint , flash , render_template , redirect ,abort ,request , jsonify , url_for
 from flask_login import current_user , login_required
 from flask_blogg import db
+import datetime
+from sqlalchemy import func
 from flask_blogg.models import Post , User , dailyRecord
 main = Blueprint('main',__name__)
 errors = Blueprint('errors',__name__)
@@ -30,11 +32,15 @@ def get_my_ip():
 
 
 
-@main.route('/dailyrecord/<int:userid>',methods=["GET","POST"])
+@main.route('/dailyrecord/',methods=["GET","POST"])
 @login_required
-def dailyrecord(userid):
-    if current_user.id == userid:
-        if request.method=="POST":
+def dailyrecord():
+    if request.method=="POST":
+        todaydate = datetime.date.today().strftime('%Y-%m-%d')
+        dailyrecorddata = dailyRecord.query.filter(func.DATE(dailyRecord.date_posted) == todaydate).filter_by(userid=current_user.id).all()
+        print(len(dailyrecorddata))
+        if len(dailyrecorddata) == 0:
+            print('i am here')
             if request.form['form_type']=='daily_record_data':
                 morningwalk = int(request.form['morningWalk'])
                 waterdrank = int(request.form['waterDrank'])
@@ -55,10 +61,10 @@ def dailyrecord(userid):
                 posted_or_not=1,userid=current_user.id)
                 db.session.add(dailyrecord)
                 db.session.commit()
-                flask('data is uploaded successfully','success')
-    else:
-        flash("You dont have access to another person's record","danger")
-        return redirect(url_for('main.index'))
+                flash('data is uploaded successfully','success')
+        else:
+            print('i am in else')
+            flash('You already filled the form today. You can only do it tomorrow','danger')
     return render_template('dailyrecord.html')
 
 
