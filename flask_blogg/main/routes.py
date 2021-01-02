@@ -26,13 +26,6 @@ def about():
 
 
 
-@main.route("/myip", methods=["GET"])
-def get_my_ip():
-    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
-        return jsonify({'ip':request.environ['REMOTE_ADDR']})
-    else:
-        return jsonify({'ip':request.environ['HTTP_X_FORWARDED_FOR']}) # if behind a proxy
-
 
 @main.route('/dailyrecord/',methods=["GET","POST"])
 @login_required
