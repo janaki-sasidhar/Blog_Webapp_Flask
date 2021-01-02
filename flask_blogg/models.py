@@ -83,6 +83,23 @@ class dailyRecord(db.Model):
 
     def __repr__(self):
         return f'This is the daily record'
+
+    @property
+    def serialize(self):
+        return {'name': self.id or 'Null',
+                'morningwalk':self.morningwalk or 'Null',
+                'waterdrank':self.waterdrank or 'Null',
+                'breakfast':self.breakfast or 'Null',
+                'breakfast_calories':self.breakfast_calories or 'Null',
+                'lunch':self.lunch or 'Null',
+                'lunch_calories':self.lunch_calories or 'Null',
+                'dinner':self.dinner or 'Null',
+                'dinner_calories':self.dinner_calories or 'Null',
+                'total_calories':self.total_calories or 'Null',
+                'nightwalk':self.nightwalk or 'Null',
+                'comment':self.comment or 'Null'
+                }
+
 class Paste(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=True)

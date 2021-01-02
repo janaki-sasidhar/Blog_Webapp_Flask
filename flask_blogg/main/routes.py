@@ -1,6 +1,7 @@
 from flask import Blueprint , flash , render_template , redirect ,abort ,request , jsonify , url_for
 from flask_login import current_user , login_required
 from flask_blogg import db
+import json
 import datetime
 from sqlalchemy import func
 from flask_blogg.models import Post , User , dailyRecord
@@ -27,17 +28,18 @@ def about():
 
 @main.route("/myip", methods=["GET"])
 def get_my_ip():
-    return jsonify({'ip': request.remote_addr}), 200
-
-
+    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+        return jsonify({'ip':request.environ['REMOTE_ADDR']})
+    else:
+        return jsonify({'ip':request.environ['HTTP_X_FORWARDED_FOR']}) # if behind a proxy
 
 
 @main.route('/dailyrecord/',methods=["GET","POST"])
 @login_required
 def dailyrecord():
+    todaydate = datetime.date.today().strftime('%Y-%m-%d')
+    dailyrecorddata = dailyRecord.query.filter(func.DATE(dailyRecord.date_posted) == todaydate).filter_by(userid=current_user.id).all()
     if request.method=="POST":
-        todaydate = datetime.date.today().strftime('%Y-%m-%d')
-        dailyrecorddata = dailyRecord.query.filter(func.DATE(dailyRecord.date_posted) == todaydate).filter_by(userid=current_user.id).all()
         print(len(dailyrecorddata))
         if len(dailyrecorddata) == 0:
             print('i am here')
@@ -65,6 +67,13 @@ def dailyrecord():
         else:
             print('i am in else')
             flash('You already filled the form today. You can only do it tomorrow','danger')
+            dailyrecorddata = dailyRecord.query.filter(func.DATE(dailyRecord.date_posted) == todaydate).filter_by(userid=current_user.id).first()
+            return render_template('dailyrecordsummary.html',dailyrecorddata=dailyrecorddata.serialize)
+    elif len(dailyrecorddata)!=0:
+        flash('You already filled the form today. You can only do it tomorrow','danger')
+        dailyrecorddata = dailyRecord.query.filter(func.DATE(dailyRecord.date_posted) == todaydate).filter_by(userid=current_user.id).first()
+        dailyrecorddata = json.dumps(dailyrecorddata.serialize, sort_keys = True, indent = 4, separators = (',', ': '))
+        return render_template('dailyrecordsummary.html',dailyrecorddata=dailyrecorddata)
     return render_template('dailyrecord.html')
 
 
